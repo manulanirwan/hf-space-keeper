@@ -1,0 +1,18 @@
+name: Keep Hugging Face Space Alive
+
+on:
+  schedule:
+    # සෑම මිනිත්තු 5කට වරක්ම automatic run වේ
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # අවශ්‍ය නම් manual run කිරීමටද හැක
+
+jobs:
+  ping-space:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping HF Space
+        env:
+          SPACE_URL: ${{ secrets.HF_SPACE_URL }}
+        run: |
+          curl -s -L "$SPACE_URL" > /dev/null
+          echo "Pinged Hugging Face Space successfully at $(date)!"
